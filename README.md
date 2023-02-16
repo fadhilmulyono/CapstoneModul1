@@ -1,4 +1,4 @@
-# Capstone Project Modul 1
+# Capstone Project Module 1
 Capstone Project Modul 1 Programming Fundamental (Python)
 
 - Nama: Fadhil Mulyono
