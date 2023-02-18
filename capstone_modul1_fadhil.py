@@ -76,7 +76,7 @@ def create_data():
                 jumlah_barang = int(input("\tMasukkan jumlah barang terjual: "))
 
                 # Menampilkan Menu pilihan Simpan Data
-                simpan_data = input("\tYakin menambahkan data yang baru Anda masukkan untuk ID : {} ? "
+                simpan_data = input("\tApakah Anda yakin menambahkan data yang baru Anda masukkan untuk ID: {}? "
                                     .format(id_tambah))
 
                 if simpan_data.lower() == "ya":
@@ -116,29 +116,29 @@ def read_data():
                 # Tampilkan notifikasi Tidak Ada Data
                 print("\n\tMohon maaf, tidak ada data penjualan toko yang dapat ditampilkan.")
             else:
-                # Initialize variable Total Penjualan Produk per kolom
+                # Initialize variable Total Penjualan Barang per kolom
                 total_penjualan = 0
 
                 # Menampilkan Seluruh Data
                 print("""
     Menampilkan Seluruh Data Penjualan Toko
     {}
-    {} | {:<15} | {:<10} | {:<6} | {}
-    {}""".format(border, "No", "Nama Produk", "Harga", "Jumlah", "Total", border))
+    {:>2} | {:<15} | {:<10} | {:<6} | {}
+    {}""".format(border, "No", "Nama Barang", "Harga", "Jumlah", "Total", border))
                 for i in products:
-                    # Total Penjualan = Kalikan harga produk dengan jumlah produk terjual
+                    # Total Penjualan = Kalikan harga barang dengan jumlah barang terjual
                     total = products[i]['harga'] * products[i]['jumlah']
 
                     # Jumlahkan semua kolom Total Penjualan
                     total_penjualan += total
 
                     # Tampilkan daftar penjualan per kolom
-                    print("""\t {} | {:<15} | Rp. {:<6} | {:<6} | Rp. {}""".format
+                    print("\t{:>2} | {:<15} | Rp. {:<6} | {:<6} | Rp. {}".format
                           (i, products[i]['nama'], products[i]['harga'], products[i]['jumlah'], total))
 
                 # Tampilkan hasil dari penjumlahan Total Penjualan
                 print("""\t{}
-         Total Penjualan : Rp. {}""".format(border, total_penjualan))
+         {} {}""".format(border, "Total Penjualan : Rp.", total_penjualan))
 
         elif menu_option == 2:
             # User input Primary Key (ID) data yang ingin dicari
@@ -151,7 +151,7 @@ def read_data():
                 # Tampilkan notifikasi Tidak Ada Data
                 print("\n\tMohon maaf, ID data yang Anda masukkan ({}) tidak ada.".format(id_cari))
             else:
-                # Total Penjualan = Kalikan harga produk dengan jumlah produk terjual
+                # Total Penjualan = Kalikan harga barang dengan jumlah barang terjual
                 total = products[id_cari]['harga'] * products[id_cari]['jumlah']
 
                 # Menampilkan Data Sesuai Input User
@@ -160,8 +160,8 @@ def read_data():
     {}
     {} | {:<15} | {:<10} | {:<6} | {}
     {}
-     {} | {:<15} | Rp. {:<6} | {:<6} | Rp. {}
-    {}""".format(id_cari, border, "No", "Nama Produk", "Harga", "Jumlah", "Total", border, id_cari,
+    {:>2} | {:<15} | Rp. {:<6} | {:<6} | Rp. {}
+    {}""".format(id_cari, border, "No", "Nama Barang", "Harga", "Jumlah", "Total", border, id_cari,
                  products[id_cari]['nama'], products[id_cari]['harga'], products[id_cari]['jumlah'], total, border))
 
         elif menu_option == 3:
@@ -195,7 +195,7 @@ def update_data():
                 # Tampilkan notifikasi Tidak Ada Data
                 print("\n\tMohon maaf, ID data yang Anda masukkan ({}) tidak ada.".format(id_update))
             else:
-                # Total Penjualan = Kalikan harga produk dengan jumlah produk terjual
+                # Total Penjualan = Kalikan harga barang dengan jumlah barang terjual
                 total = products[id_update]['harga'] * products[id_update]['jumlah']
 
                 # Menampilkan Data Sesuai ID Data yang diinput user
@@ -204,27 +204,45 @@ def update_data():
     {}
     {} | {:<15} | {:<10} | {:<6} | {}
     {}
-     {} | {:<15} | Rp. {:<6} | {:<6} | Rp. {}
-    {}""".format(id_update, border, "No", "Nama Produk", "Harga", "Jumlah", "Total", border, id_update,
+    {:>2} | {:<15} | Rp. {:<6} | {:<6} | Rp. {}
+    {}""".format(id_update, border, "No", "Nama Barang", "Harga", "Jumlah", "Total", border, id_update,
                  products[id_update]['nama'], products[id_update]['harga'], products[id_update]['jumlah'],
                  total, border))
 
                 print("\n\tUbah Data Penjualan Untuk ID: {}".format(id_update))
+
                 # User input kolom yang akan di Update (Nama, Harga, Jumlah barang)
-                nama_barang = input("\tMasukkan nama barang: ")
-                harga_barang = int(input("\tMasukkan harga barang: "))
-                jumlah_barang = int(input("\tMasukkan jumlah barang terjual: "))
+                update_nama = input("\tApakah Anda ingin mengganti nama barang? ")
 
-                simpan_data = input("\tYakin menyimpan perubahan data yang Anda masukkan untuk ID : {} ? "
-                                    .format(id_update))
-
-                if simpan_data.lower() == "ya":
-                    print("\n\tSukses, data berhasil diubah.")
-                    products[id_update]['nama'] = nama_barang
-                    products[id_update]['harga'] = harga_barang
-                    products[id_update]['jumlah'] = jumlah_barang
+                if update_nama.lower() == "ya":
+                    # Input "ya" untuk Input Value Baru
+                    nama_barang = input("\tMasukkan nama barang: ")
                 else:
-                    print("\n\tMohon maaf, data tidak berhasil diubah.")
+                    # Jika input selain "ya" atau dibiarkan kosong, value tidak di update
+                    nama_barang = products[id_update]['nama']
+
+                update_harga = input("\tApakah Anda ingin mengganti harga barang? ")
+
+                if update_harga.lower() == "ya":
+                    # Input "ya" untuk Input Value Baru
+                    harga_barang = int(input("\tMasukkan harga barang: "))
+                else:
+                    # Jika input selain "ya" atau dibiarkan kosong, value tidak di update
+                    harga_barang = products[id_update]['harga']
+
+                update_jumlah = input("\tApakah Anda ingin mengganti jumlah barang terjual? ")
+
+                if update_jumlah.lower() == "ya":
+                    # Input "ya" untuk Input Value Baru
+                    jumlah_barang = int(input("\tMasukkan jumlah barang terjual: "))
+                else:
+                    # Jika input selain "ya" atau dibiarkan kosong, value tidak di update
+                    jumlah_barang = products[id_update]['jumlah']
+
+                print("\n\tSukses, data berhasil diubah.")
+                products[id_update]['nama'] = nama_barang
+                products[id_update]['harga'] = harga_barang
+                products[id_update]['jumlah'] = jumlah_barang
 
         elif menu_option == 2:
             # Kembali ke menu utama
@@ -255,7 +273,8 @@ def delete_data():
                 print("\n\tMohon maaf, ID data yang Anda masukkan ({}) tidak ada.".format(id_delete))
             else:
                 # Menampilkan Menu pilihan Hapus Data
-                hapus_data = input("\n\tYakin menghapus data yang sesuai dengan ID : {} ? ".format(id_delete))
+                hapus_data = input("\n\tApakah Anda yakin untuk menghapus data yang sesuai dengan ID: {}? "
+                                   .format(id_delete))
 
                 if hapus_data.lower() == "ya":
                     # Input "ya" untuk Menghapus Data
